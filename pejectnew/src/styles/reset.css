@@ -101,6 +101,8 @@ textarea:not([rows]) {
     scroll-margin-block: 5ex;
 }
 
+/* Font Faces - Commented out as per user's priority and to avoid conflicts/errors if fonts are missing */
+/*
 @font-face {
     font-family: "Helvetica Now";
     src: url('../char/HelveticaNowDisplay-Light.woff2') format('woff2'),
@@ -109,6 +111,7 @@ textarea:not([rows]) {
     font-style: normal;
     font-display: swap;
 }
+*/
 
 @font-face {
     font-family: "Helvetica Now";

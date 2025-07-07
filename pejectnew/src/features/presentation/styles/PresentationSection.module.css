@@ -33,6 +33,8 @@
     height: 100vh; /* Each "view" of a slide takes up viewport height */
     width: 100%;
     overflow: hidden; /* Clip slides that are outside the viewport during transition */
+    perspective: 800px; /* Added for 3D effect of slides */
+    transform-style: preserve-3d; /* Added for 3D effect of slides */
 }
 
 /* Individual slide common styling - more specific styles in their own modules */
@@ -40,7 +42,7 @@
     /* grid-area: 1 / 1 / 2 / 2; /* If using grid to stack them */
     position: absolute; /* If GSAP is handling all positioning */
     top:0; /* Ensure they stack at the same top position */
-    left:0;
+    left: 0; /* Centering is done by xPercent: -50 in GSAP */
     width: 89.79%; /* Original width */
     height: 100%; /* Take full height of .slidesLayout (which is 100vh) */
     display: flex; /* Default, can be overridden by specific slide styles */
@@ -48,8 +50,8 @@
     justify-content: center;
     border-radius: 1.5rem; /* Common border radius for slides */
     overflow: hidden; /* Prevent content spill from individual slides */
-    /* transform-style: preserve-3d; /* For 3D animations */
-    /* backface-visibility: hidden; /* For smoother 3D animations */
+    transform-style: preserve-3d; /* For 3D animations within the slide itself if any, and for its own transforms */
+    backface-visibility: hidden; /* For smoother 3D animations */
 
     /* Initial state for GSAP animations (e.g., hidden, off-screen) */
     /* opacity: 0; */

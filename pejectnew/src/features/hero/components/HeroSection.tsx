@@ -45,12 +45,25 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isPreloaderComplete }) => {
     isReady: isPreloaderComplete
   });
 
-  letterContainersRef.current = [];
-  spriteContainersRef.current = [];
+  letterContainersRef.current = []; // Clear refs array for re-population
+  spriteContainersRef.current = []; // Clear refs array for re-population
+
+  const localTimeRef = useRef<HTMLDivElement>(null);
+  const localPlaceRef = useRef<HTMLDivElement>(null);
+  const descriptorRef = useRef<HTMLDivElement>(null);
+  const socialLinksRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  socialLinksRefs.current = []; // Clear for re-population on re-renders
+  const addSocialLinkRef = (el: HTMLAnchorElement | null) => {
+    if (el && !socialLinksRefs.current.includes(el)) {
+      socialLinksRefs.current.push(el);
+    }
+  };
+  const tapHaloTextRef = useRef<HTMLDivElement>(null);
+
 
   // Refs for videos and video trigger links
   const videoPlayerRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const { setActiveVideoIndex } = useHeroVideoManager({ videoRefs: videoPlayerRefs, initialActiveIndex: 0 }); // Default to first video
+  const { setActiveVideoIndex } = useHeroVideoManager({ videoRefs: videoPlayerRefs, initialActiveIndex: 0 });
 
   // Refs for the text links that trigger video changes
   const designBrandingLinkRef = useRef<HTMLSpanElement>(null);
@@ -89,17 +102,48 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isPreloaderComplete }) => {
       const sprites = spriteContainersRef.current.filter(el => el);
 
       if (letters.length > 0) {
-        gsap.set(letters, { autoAlpha: 0, yPercent: 20 });
+        gsap.set(letters, { autoAlpha: 0, yPercent: 20 }); // Initial state for letters
         gsap.to(letters, {
           autoAlpha: 1,
           yPercent: 0,
           duration: 0.8,
           stagger: 0.1,
           ease: 'power2.out',
-          delay: 0.8 // Delay slightly after heading text mask reveal (mask is ~1s)
+          delay: 0.8, // Delay slightly after heading text mask reveal
         });
       }
-      gsap.set(sprites, { autoAlpha: 0 }); // Sprites initially hidden
+      // Sprites initial state is handled by useLetterSpriteAnimation hook now
+      // gsap.set(sprites, { autoAlpha: 0 });
+
+      // Animate bottom wrapper elements
+      const bottomElements = [
+        localTimeRef.current,
+        localPlaceRef.current,
+        descriptorRef.current,
+        ...socialLinksRefs.current,
+      ].filter(el => el);
+
+      if (bottomElements.length > 0) {
+        gsap.set(bottomElements, { autoAlpha: 0, y: 20 }); // Initial state for bottom elements
+        gsap.to(bottomElements, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: 'power2.out',
+          delay: 1.2, // Delay after main heading and letters animation
+        });
+      }
+
+      // Animation for "TAP HALO" text
+      if (tapHaloTextRef.current) {
+        gsap.set(tapHaloTextRef.current, { autoAlpha: 0 });
+        gsap.to(tapHaloTextRef.current, {
+            autoAlpha: 1,
+            duration: 0.5,
+            delay: 1.8 // After bottom elements
+        });
+      }
     }
   }, [isPreloaderComplete]);
 
@@ -114,14 +158,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isPreloaderComplete }) => {
 
   return (
     <section id="hero-section" className={`${styles.heroSection} hero-section`}>
-      <HaloAnimation /> {/* Add HaloAnimation component here */}
-      {/* The original HTML had two halo containers, one normal, one with 'difference' class.
-          We might need to conditionally render another instance or pass props for blending mode.
-          For now, one instance is added.
-          <div className={`${styles.haloContainer} ${styles.difference}`}>
-             <div id="tap-halo-desktop" className={styles.tapHalo}>♪ TAP HALO ♪</div>
-          </div>
-      */}
+      <HaloAnimation />
+      {/* Add the "TAP HALO" text, possibly controlled by HaloAnimation or its own state */}
+      <div className={styles.tapHaloTextContainer}> {/* Use a specific container if needed */}
+        <div ref={tapHaloTextRef} className={styles.tapHaloText}>♪ TAP HALO ♪</div>
+      </div>
       <div className={`${styles.headingWrapper} heading-wrapper`}>
         <h2 className={`${styles.heroHeading} hero-heading`} ref={headingRef}>
           <span className={styles.notHoverable} ref={addHeadingLinkRef}>We live our best lives excelling at </span>
@@ -142,22 +183,22 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isPreloaderComplete }) => {
       <div className={`${styles.bottomWrapper} bottom-wrapper`}>
         <div className={`${styles.bottomLinksWrapper} bottom-links-wrapper`}>
           <div>
-            <div className={`${styles.welcome} welcome`} id="local-time">{localTime}</div>
-            <div className={`${styles.welcome} welcome`} id="local-place">DRESDEN, GERMANY</div>
+            <div className={`${styles.welcome} welcome`} id="local-time" ref={localTimeRef}>{localTime}</div>
+            <div className={`${styles.welcome} welcome`} id="local-place" ref={localPlaceRef}>DRESDEN, GERMANY</div>
           </div>
           <div className={styles.divider}></div>
-          <div className={`${styles.descriptor} descriptor`}>
+          <div className={`${styles.descriptor} descriptor`} ref={descriptorRef}>
             <div className={`${styles.welcome} welcome`}>DESIGN CREW</div>
           </div>
           <div className={styles.divider}></div>
           <div>
-            <a href="https://www.behance.net/Radiancefamily" target="_blank" rel="noopener noreferrer" className={`${styles.animatedLinkFooter} ${styles.welcome} welcome animated-link`}>
+            <a href="https://www.behance.net/Radiancefamily" target="_blank" rel="noopener noreferrer" ref={addSocialLinkRef} className={`${styles.animatedLinkFooter} ${styles.welcome} welcome animated-link`}>
               <span>BEHANCE</span>
             </a>
-            <a href="https://www.instagram.com/designbyradiance/" target="_blank" rel="noopener noreferrer" className={`${styles.animatedLinkFooter} ${styles.welcome} welcome animated-link`}>
+            <a href="https://www.instagram.com/designbyradiance/" target="_blank" rel="noopener noreferrer" ref={addSocialLinkRef} className={`${styles.animatedLinkFooter} ${styles.welcome} welcome animated-link`}>
               <span>INSTAGRAM</span>
             </a>
-            <a href="https://dprofile.ru/radiance" target="_blank" rel="noopener noreferrer" className={`${styles.animatedLinkFooter} ${styles.welcome} welcome animated-link`}>
+            <a href="https://dprofile.ru/radiance" target="_blank" rel="noopener noreferrer" ref={addSocialLinkRef} className={`${styles.animatedLinkFooter} ${styles.welcome} welcome animated-link`}>
               <span>DPROFILE</span>
             </a>
           </div>

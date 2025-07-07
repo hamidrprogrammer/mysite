@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Lenis from '@studio-freight/lenis';
 import Preloader from './features/preloader/components/Preloader';
 import Header from './features/navigation/components/Header';
 import Menu from './features/navigation/components/Menu';
@@ -10,6 +11,36 @@ import Footer from './features/footer/components/Footer'; // Import Footer
 const App: React.FC = () => {
   const [isPreloaderAnimationComplete, setIsPreloaderAnimationComplete] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const lenisRef = useRef<Lenis | null>(null);
+
+  useEffect(() => {
+    // Add classes to HTML element
+    document.documentElement.classList.add('lenis', 'lenis-smooth');
+
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      // gestureDirection: 'vertical', // self-explanatory
+      // smooth: true, // DEPRECATED
+      // smoothTouch: false, // DEPRECATED
+      // touchMultiplier: 2, // DEPRECATED
+    });
+    lenisRef.current = lenis;
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+      document.documentElement.classList.remove('lenis', 'lenis-smooth');
+      lenisRef.current = null;
+    };
+  }, []);
+
 
   const handlePreloaderAnimationComplete = () => {
     setIsPreloaderAnimationComplete(true);
@@ -22,22 +53,20 @@ const App: React.FC = () => {
   const handleNavigation = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+      // section.scrollIntoView({ behavior: 'smooth' }); // Native smooth scroll
+      lenisRef.current?.scrollTo(section, { offset: 0, duration: 1.5, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
     }
-    setIsMenuOpen(false);
+    setIsMenuOpen(false); // Close menu after navigation
   };
 
   useEffect(() => {
-    // Logic for body scroll lock can be added here if needed,
-    // especially when integrating with a smooth scroll library like Lenis.
-    // For example:
-    // if (isMenuOpen) {
-    //   lenisInstance?.stop(); // If using Lenis
-    //   document.body.style.overflow = 'hidden';
-    // } else {
-    //   lenisInstance?.start();
-    //   document.body.style.overflow = 'auto';
-    // }
+    if (isMenuOpen) {
+      lenisRef.current?.stop();
+      // document.body.style.overflow = 'hidden'; // Lenis handles this
+    } else {
+      lenisRef.current?.start();
+      // document.body.style.overflow = 'auto'; // Lenis handles this
+    }
   }, [isMenuOpen]);
 
 

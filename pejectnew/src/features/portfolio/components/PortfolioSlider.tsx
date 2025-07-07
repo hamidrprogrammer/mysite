@@ -17,9 +17,10 @@ interface PortfolioItemLink { // Renamed from PortfolioItem to avoid conflict if
 interface PortfolioSliderProps {
   items: PortfolioItemLink[];
   isReady?: boolean;
+  sectionRef: React.RefObject<HTMLElement>; // Added sectionRef prop
 }
 
-const PortfolioSlider: React.FC<PortfolioSliderProps> = ({ items, isReady }) => {
+const PortfolioSlider: React.FC<PortfolioSliderProps> = ({ items, isReady, sectionRef }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const tagARef = useRef<HTMLHeadingElement>(null);
@@ -38,11 +39,12 @@ const PortfolioSlider: React.FC<PortfolioSliderProps> = ({ items, isReady }) => 
   usePortfolioSliderAnimation({
     items,
     activeIndex,
-    setActiveIndex, // Pass setActiveIndex to the hook if it needs to control index (e.g., for drag)
+    setActiveIndex,
     cardsContainerRef,
     cardRefs: individualCardRefs,
     tagARef, tagBRef, projectNameARef, projectNameBRef, projectYearRef,
-    isReady
+    isReady,
+    sectionRef // Pass sectionRef to the hook
   });
 
   usePortfolioCursor({

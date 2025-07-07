@@ -40,39 +40,46 @@ const useHorizontalCardScroll = ({
         return;
     }
 
-    const scrollDistance = scrollWidth - holderWidth;
+    // Calculate the width of a single set of items (assuming content is duplicated for seamless loop)
+    const singleSetWidth = wrapper.scrollWidth / 2;
+
+    if (singleSetWidth <= holderWidth && scrollWidth > holderWidth) {
+        // Content is wider than holder, but not enough for a full seamless loop with duplication.
+        // Simple back and forth or no scroll might be better.
+        // For now, let's allow the existing logic to try, or just disable if not wide enough for one set.
+        // This case should ideally not happen if duplication is correct and content is rich.
+        console.warn("Content might not be wide enough for seamless duplicated scroll anmimation.");
+    }
+
+    if (scrollWidth <= holderWidth) { // No need to scroll if content fits
+        gsap.set(wrapper, { x: 0 });
+        animationRef.current?.kill(); // Ensure no previous animation runs
+        return;
+    }
 
     animationRef.current?.kill(); // Kill previous animation
 
-    // Simple repeating animation for now.
-    // For a ScrollTrigger-based animation tied to page scroll, the setup would be different,
-    // involving pinning the slide and scrubbing the 'x' property of the wrapper.
-    // This example creates a continuous loop.
+    gsap.set(wrapper, { x: 0 }); // Ensure starting position
 
-    gsap.set(wrapper, { x: 0 }); // Start at the beginning
-
-    animationRef.current = gsap.timeline({
-        repeat: -1,
-        defaults: { ease: 'none' }
+    // Create a seamless loop
+    animationRef.current = gsap.to(wrapper, {
+      x: `-=${singleSetWidth}`, // Move left by the width of one set of items
+      duration: singleSetWidth / 80, // Adjust speed: 80 pixels per second
+      ease: 'none',
+      repeat: -1,
+      modifiers: { // GSAP 3 feature
+        x: gsap.utils.unitize(gsap.utils.wrap(0, -singleSetWidth)) // Wrap the x value
+      }
     });
 
-    // Animate to the end, then jump back to start.
-    // The duration should be proportional to the scrollDistance to maintain consistent speed.
-    // Example: 20 pixels per second speed.
-    const speed = 100; // pixels per second
-    const duration = scrollDistance / speed;
-
-    animationRef.current
-      .to(wrapper, { x: -scrollDistance, duration: duration })
-      // Add a brief pause at the end before looping (optional)
-      // .to(wrapper, {duration: 1}) // pause for 1s
-      // To make it truly seamless with duplicated content, you'd animate x to -scrollWidth/2
-      // and then on repeat, jump x back by scrollWidth/2.
-      // This requires the content in wrapperRef to be duplicated.
-      // The current JSX for EstimatesSlide already duplicates cards.
-      // So, we animate to the end of the first set of cards.
-      .to(wrapper, { x: -(scrollWidth / 2), duration: (scrollWidth / 2) / speed })
-      .set(wrapper, { x: 0 }) // Jump back to start for the loop
+    // Alternative timeline approach for older GSAP or more control:
+    // animationRef.current = gsap.timeline({ repeat: -1, defaults: { ease: 'none' } });
+    // animationRef.current
+    //   .to(wrapper, {
+    //     x: `-=${singleSetWidth}`,
+    //     duration: singleSetWidth / 80, // Adjust speed (e.g., 80px/sec)
+    //   })
+    //   .set(wrapper, { x: 0 }); // Immediately reset to start for the next loop iteration
 
     if (isSlideVisible) {
       animationRef.current.play();

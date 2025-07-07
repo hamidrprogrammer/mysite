@@ -1,62 +1,55 @@
 /* HaloAnimation.module.css */
 
 .haloCanvasContainer {
-    position: absolute; /* Or fixed, depending on desired behavior relative to hero section */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%; /* Or a specific height if it's not full screen */
-    pointer-events: none; /* Allow clicks to pass through to elements behind it */
-    z-index: 0; /* Ensure it's behind text/UI but visible */
-    display: flex; /* For centering canvas if needed, or direct manipulation by Three.js */
-    justify-content: center;
-    align-items: center;
-    overflow: hidden; /* Prevent canvas from causing scrollbars if it's larger than container */
+  position: fixed; /* As per original .halo-container */
+  top: 0.5em;      /* As per original .halo-container padding-top */
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  width: 5.5rem;   /* As per original .threejs-wrapper canvas */
+  /* height: auto; Let Three.js determine height based on aspect ratio or set a fixed one */
+  /* Forcing an aspect ratio of roughly 2:1 like 88x44 for 5.5rem width */
+  height: calc(5.5rem / 2); /* Or a fixed height e.g., 2.75rem or 3rem */
+  z-index: 9999;   /* As per original .halo-container */
+  pointer-events: none; /* Container itself should not block, canvas will handle its events */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* If the canvas is created and managed by the hook and directly appended,
-   styles might be applied directly by the hook or to its parent.
-   This class is a fallback if you explicitly create a canvas element in HaloAnimation.tsx */
-.haloCanvas {
-    display: block; /* Remove extra space under canvas */
-    width: 100%;
-    height: 100%;
+/* The canvas element created by Three.js will be appended to mountRef.
+   We can style it if needed, but often Three.js handles its own sizing within the mount.
+   If direct styling is needed for the canvas: */
+.haloCanvasContainer canvas { /* Target canvas directly if appended by Three.js */
+  display: block;
+  width: 100% !important;  /* Override three.js default style if necessary */
+  height: 100% !important; /* Override three.js default style if necessary */
+  cursor: pointer; /* As per original .threejs-wrapper canvas */
+  pointer-events: all; /* As per original .threejs-wrapper canvas */
 }
 
-/* Styles from original template for .halo-container and .threejs-wrapper */
-/* These might need to be adapted based on how HaloAnimation is integrated */
-
-/*
-.haloContainer { // Original: .halo-container
-    position: fixed;
-    display: flex;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 9999; // Very high z-index in original
-    flex-direction: column;
-    align-items: center;
-    padding-top: .5em;
-    pointer-events: none;
+/* Styles for the "TAP HALO" text if it's part of this component or a sibling */
+/* This text was in a separate .halo-container.difference in the original */
+.tapHaloTextContainer {
+  position: fixed;
+  top: 0.5em; /* Match canvas container's top */
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* To stack canvas (if here) and text */
+  z-index: 9999; /* Same as canvas container */
+  pointer-events: none; /* Container doesn't block */
+  mix-blend-mode: difference; /* This was on a parent in the original */
 }
 
-.threejsWrapper canvas { // Original: .threejs-wrapper canvas
-    width: 5.5rem; // This was very small, likely for the top halo, not a full background
-    height: auto;
-    display: block;
-    transform: translate3d(0, 0, 0);
-    cursor: pointer;
-    pointer-events: all; // This was interactive in original
+.tapHaloText {
+  /* position: absolute; */ /* If positioned relative to tapHaloTextContainer */
+  /* bottom: -2.5rem; */ /* Adjust to position below the canvas if canvas is also in this container */
+  padding-top: calc( (5.5rem / 2) + 0.5rem ); /* Position below the halo canvas: canvas height + some gap */
+  color: var(--white);
+  font-size: .75rem;
+  opacity: 0; /* Should be animated in by JS as per original */
+  pointer-events: none; /* Text should not block canvas interaction */
+  text-align: center;
 }
-
-.difference { // Original: .difference
-    mix-blend-mode: difference;
-}
-
-.tapHalo { // Original: .tap-halo
-    padding-top: 3rem;
-    color: var(--white);
-    font-size: .75rem;
-    opacity: 0; // Animated by JS
-}
-*/

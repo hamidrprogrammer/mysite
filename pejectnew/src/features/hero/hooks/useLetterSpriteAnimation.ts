@@ -29,17 +29,20 @@ const useLetterSpriteAnimation = ({
       const spriteBox = sprites[index];
       if (!spriteBox) return;
 
-      // Initial state for sprites is opacity 0 (set by HeroSection.tsx or CSS)
-      // and potentially a starting transform e.g. scale(1.3) as per original inline styles
-      // We can set it here again to be sure, or rely on CSS.
-      // For example, if styles.spriteContainer in CSS has opacity:0 and transform: scale(1.3)
-      // gsap.set(spriteBox, { autoAlpha: 0, scale: 1.3, yPercent: 10 }); // Example initial state
+      // Set initial state for sprites based on original site's inline styles
+      // (translateX is assumed to be handled by CSS layout for now)
+      gsap.set(spriteBox, {
+        autoAlpha: 0,
+        scale: 1.3,
+        yPercent: 5, // Slight upward movement on reveal, adjust as needed
+        // visibility: 'hidden' // GSAP autoAlpha handles visibility
+      });
 
       const tl = gsap.timeline({ paused: true });
       tl.to(spriteBox, {
         autoAlpha: 1,
-        scale: 1, // Animate from 1.3 (CSS) to 1
-        yPercent: 0, // Animate from 10 (example) to 0
+        scale: 1,
+        yPercent: 0,
         duration: 0.4,
         ease: 'power2.out',
       });

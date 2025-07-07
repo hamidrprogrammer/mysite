@@ -3,18 +3,17 @@ import styles from '../styles/PortfolioSection.module.css'; // To be created
 import PortfolioWelcome from './PortfolioWelcome'; // To be created
 import PortfolioSlider from './PortfolioSlider';   // To be created
 
-// Placeholder for the hook that will manage scroll/pinning animations for this section
-// import usePortfolioScrollAnimation from '../hooks/usePortfolioScrollAnimation';
+// import usePortfolioSliderAnimation from '../hooks/usePortfolioSliderAnimation'; // Now called inside PortfolioSlider
 
 interface PortfolioSectionProps {
   isReady?: boolean; // Optional: if animations depend on overall readiness
 }
 
 const PortfolioSection: React.FC<PortfolioSectionProps> = ({ isReady = true }) => {
-  const sectionRef = useRef<HTMLElement>(null);
-  // const sliderLayoutRef = useRef<HTMLDivElement>(null); // If needed for pinning the slider part
+  const sectionRef = useRef<HTMLElement>(null); // This ref is for pinning the whole section
 
-  // usePortfolioScrollAnimation({ sectionRef, sliderLayoutRef, isReady });
+  // usePortfolioSliderAnimation is now called within PortfolioSlider,
+  // to which we pass sectionRef.
 
   // Dummy data for portfolio items - replace with actual data structure later
   const portfolioItems = [
@@ -35,13 +34,11 @@ const PortfolioSection: React.FC<PortfolioSectionProps> = ({ isReady = true }) =
       ref={sectionRef}
       className={`${styles.portfolioSection} portfolio-section`}
     >
-      {/* PortfolioWelcome will be an absolutely positioned overlay that animates out */}
       <PortfolioWelcome isReady={isReady} />
 
       {/* PortfolioSlider will contain the main interactive part */}
-      {/* The ref for pinning might be on this sliderLayout or the sectionRef itself */}
-      <div /*ref={sliderLayoutRef}*/ className={styles.portfolioSliderLayout}>
-         <PortfolioSlider items={portfolioItems} isReady={isReady} />
+      <div className={styles.portfolioSliderLayout}>
+         <PortfolioSlider items={portfolioItems} isReady={isReady} sectionRef={sectionRef} />
       </div>
     </section>
   );

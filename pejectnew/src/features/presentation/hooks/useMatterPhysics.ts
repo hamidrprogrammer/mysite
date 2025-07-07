@@ -52,19 +52,58 @@ const useMatterPhysics = ({ containerRef, isSlideVisible }: UseMatterPhysicsProp
       },
     });
 
-    // Add some bodies (e.g., circles)
+    // Add some bodies (e.g., circles with image textures)
+    const imageUrls = [
+      '/pic/logo01.webp', '/pic/logo02.webp', '/pic/logo03.webp', '/pic/logo04.webp',
+      '/pic/logo05.webp', '/pic/logo06.webp', '/pic/logo07.webp', '/pic/logo08.webp',
+      // Add more relevant small images/icons if available
+      // For example, if there are simple icons for "AI", "Strategy", "Research"
+      // For now, using logos as placeholders
+    ];
+
     const bodies = [];
-    for (let i = 0; i < 15; i++) { // Add a few circles
+    const numBodies = 15;
+    const imageSizeCache: { [key: string]: { width: number, height: number } } = {};
+
+    // Preload image dimensions (simplified, ideally use actual image loading)
+    imageUrls.forEach(url => {
+        // In a real scenario, you'd load the image to get its dimensions.
+        // Here, we'll use estimated or fixed sizes if not available.
+        // For logos used, their original widths were: 51.5, 77.5, 69.5, 124.5, 180.5, 143, 109.5, 111
+        // We'll use a placeholder average size for scaling.
+        const img = new Image();
+        img.src = url;
+        // This is async, so for immediate use it's tricky. Using fixed size for now.
+        imageSizeCache[url] = { width: 100, height: 100 }; // Placeholder average size
+    });
+
+
+    for (let i = 0; i < numBodies; i++) {
+      const radius = Matter.Common.random(25, 45); // Slightly larger bodies
+      const randomTextureUrl = imageUrls[i % imageUrls.length]; // Cycle through images
+      const textureOriginalSize = imageSizeCache[randomTextureUrl] || { width: 100, height: 100 };
+
+      // Calculate xScale and yScale to fit the texture onto the circle area
+      // This makes the texture fill the diameter of the circle
+      const diameter = radius * 2;
+
       bodies.push(
         Matter.Bodies.circle(
-          Matter.Common.random(50, containerWidth - 50), // x position
-          Matter.Common.random(-containerHeight, -50),    // y position (start above canvas)
-          Matter.Common.random(10, 30), // radius
+          Matter.Common.random(radius, containerWidth - radius), // x position
+          Matter.Common.random(-containerHeight * 0.5, -radius),    // y position (start above canvas)
+          radius,
           {
-            restitution: 0.7, // Bounciness
-            friction: 0.01,
+            restitution: 0.6,
+            friction: 0.02,
+            angle: Math.random() * Math.PI * 2, // Random initial angle
             render: {
-              fillStyle: `hsl(${Matter.Common.random(0, 360)}, 70%, 60%)` // Random color
+              sprite: {
+                texture: randomTextureUrl,
+                // Adjust xScale and yScale so the texture covers the circle appropriately
+                // This assumes the texture is somewhat square or we want to fit it into a square area of diameter x diameter
+                xScale: diameter / textureOriginalSize.width,
+                yScale: diameter / textureOriginalSize.height,
+              }
             }
           }
         )
