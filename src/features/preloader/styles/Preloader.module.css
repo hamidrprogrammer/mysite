@@ -1,0 +1,79 @@
+/* Preloader Styles using CSS Modules */
+
+.preloaderWrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 99999;
+    padding: 1.5rem;
+    overflow: hidden;
+    background-color: var(--white, #F3F3EF);
+    display: grid;
+    justify-items: start;
+    align-items: end;
+    visibility: visible;
+    opacity: 1;
+}
+
+.preloaderCounter {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.25em;
+    height: 142px;
+    overflow: hidden;
+    z-index: 1;
+    justify-items: start;
+    align-items: start;
+}
+
+.counterDigitContainer {
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+}
+
+.counterPic {
+    width: 120px;
+    height: auto;
+    display: block;
+}
+
+.preloaderBackground {
+    background-color: var(--yellow, #FFD73B);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.preloaderHaloMobile {
+    display: none;
+    z-index: 1;
+}
+
+/* Media Query for Mobile specific preloader styles */
+@media screen and (max-width: 767px) {
+    .preloaderWrapper {
+        justify-items: center;
+        align-items: center;
+    }
+
+    .preloaderHaloMobile {
+        display: flex;
+        width: 89px;
+        filter: drop-shadow(0 0 var(--shadowPreloader, 0.2em) white);
+    }
+
+    .preloaderCounter {
+        display: none;
+        transform-origin: center left;
+        transform: scale(0.75);
+        margin-left: -1em;
+        margin-bottom: -5em;
+    }
+}

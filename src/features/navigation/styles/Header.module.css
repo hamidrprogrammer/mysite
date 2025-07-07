@@ -1,0 +1,90 @@
+/* Styles for Header.tsx */
+
+.appHeader {
+    width: 100%;
+    padding: 1.5rem;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    mix-blend-mode: difference;
+    color: var(--white, #F3F3EF);
+    pointer-events: none;
+}
+
+.appHeader a,
+.appHeader button {
+    color: var(--white, #F3F3EF);
+    pointer-events: all;
+}
+
+.appNav {
+    width: 100%;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    font-size: 1.25rem;
+}
+
+.briefLinkContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    grid-column: 1 / 2;
+    justify-self: start;
+}
+
+.navEnd {
+    display: flex;
+    gap: 1em;
+    grid-column: 3 / 4;
+    justify-self: end;
+}
+
+/* Animated link styles */
+.animatedLink {
+    position: relative;
+    overflow: hidden;
+    clip-path: inset(0 0 0 0);
+    cursor: pointer;
+    text-decoration: none;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+}
+
+.animatedLinkInner span,
+.menuButton span {
+    display: inline-block;
+    position: relative;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: normal;
+    color: #dedede !important;
+}
+
+.menuButton {
+    /* Specific styles for menu button if different from other animated links */
+}
+
+/* Brief Star Icon specific styling */
+.briefLinkContainer svg {
+    transform: rotate(0.1deg) scale(1.01);
+}
+
+/* Responsive adjustments for header */
+@media screen and (max-width: 767px) {
+    .appHeader {
+        padding: 0.75rem;
+    }
+
+    .briefLinkContainer svg {
+        display: none;
+    }
+
+    .animatedLinkInner span,
+    .menuButton span {
+        font-weight: 500;
+    }
+}

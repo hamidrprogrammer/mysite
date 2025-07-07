@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@studio-freight/lenis": "^1.0.42",
+    "gsap": "^3.13.0",
+    "lottie-web": "^5.13.0",
+    "luxon": "^3.6.1",
+    "matter-js": "^0.20.0",
+    "split-type": "^0.3.4",
+    "three": "^0.178.0"
+  }
+}

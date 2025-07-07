@@ -1,0 +1,80 @@
+/* GreetingsSlide.module.css */
+
+.slide {
+    display: flex;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.5rem;
+    background-color: transparent;
+    color: var(--white, #F3F3EF);
+    overflow: hidden;
+}
+
+.firstSlide {
+    /* Specific styles for first slide */
+}
+
+.teamHeading {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    text-align: center;
+    gap: 1.25rem;
+    position: relative;
+    z-index: 1;
+}
+
+.teamHeading h2 {
+    font-size: clamp(5em, 10vw, 9em);
+    text-transform: uppercase;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin: 0;
+    padding: 0;
+    color: var(--white, #F3F3EF);
+}
+
+.headingLabel {
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--white, #F3F3EF);
+}
+
+.teamBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--blue, #0D99FE);
+    z-index: -1;
+    border-radius: 1.5rem;
+    overflow: hidden;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.7;
+}
+
+/* Mobile specific adjustments */
+@media screen and (max-width: 767px) {
+    .teamHeading {
+        gap: .75rem;
+    }
+
+    .teamHeading h2 {
+        font-size: 9em;
+    }
+
+    .headingLabel {
+        font-size: 1rem;
+    }
+}

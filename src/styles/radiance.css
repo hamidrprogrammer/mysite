@@ -1,0 +1,101 @@
+:root {
+    --white: #F3F3EF;
+    --black: #060606;
+    --yellow: #FFD73B;
+    --orange: #F15F1B;
+    --pink: #FF9FC4;
+    --violet: #B9B2FD;
+    --blue: #0D99FE;
+    --footer-gray: #B3B3B5;
+    --animated-link-width: 100%;
+    --animated-link-opacity: 1;
+    --project-year: "2022";
+    --shadowPreloader: 0.2em;
+}
+
+.animated-menu-link,
+.animated-link {
+    position: relative;
+    overflow: hidden;
+    clip-path: inset(0 0 0 0);
+    cursor: pointer;
+}
+
+.animated-menu-link h2 {
+    display: inline-block;
+    position: relative;
+    line-height: 1;
+    letter-spacing: -1px;
+    font-weight: normal;
+    text-transform: none;
+}
+
+.animated-menu-link h3 {
+    display: inline-block;
+    position: relative;
+    line-height: 1;
+    letter-spacing: -1px;
+    font-weight: normal;
+    text-transform: none;
+}
+
+.animated-link span {
+    display: inline-block;
+    position: relative;
+    line-height: 1;
+}
+
+h1 {
+    font-size: 5em;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+}
+
+h2 {
+    font-size: 3em;
+    text-transform: uppercase;
+    font-weight: 800;
+    line-height: 1.2;
+    text-align: center;
+    letter-spacing: -1px;
+    margin: 0;
+    padding: 0;
+}
+
+.long {
+    display: block;
+}
+
+.short {
+    display: none;
+}
+
+/* Responsive adjustments */
+@media screen and (min-width: 1101px) and (max-width: 1440px) {
+    h2 {
+        font-size: 3.6em;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1100px) {
+    h2 {
+        font-size: 2.5rem;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .long {
+        display: none;
+    }
+
+    .short {
+        display: block;
+    }
+
+    h2 {
+        font-size: 9em;
+    }
+}
