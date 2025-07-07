@@ -1,0 +1,125 @@
+/* LastSlide.module.css */
+
+.slide {
+    display: flex;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.5rem;
+    background-color: var(--white, #F3F3EF);
+    color: var(--black, #060606);
+    overflow: hidden;
+}
+
+.endingLayout {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 2;
+    padding: 2em;
+    box-sizing: border-box;
+}
+
+.endingLayout h2 {
+    font-size: clamp(2em, 4vw, 3em);
+    text-transform: uppercase;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -1px;
+    margin: 0 0 1.5em 0;
+}
+
+.downloadPresentation {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+}
+
+.downloadPresentation h3 {
+    font-size: clamp(1.2em, 2vw, 1.5em);
+    font-weight: 500;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.downloadLink {
+    display: inline-block;
+    line-height: 0;
+}
+
+.arrowSvg {
+    width: clamp(50px, 8vw, 64px);
+    height: auto;
+    display: block;
+}
+
+.arrowSvgBackground {
+    fill: var(--black, #060606);
+    transition: fill 0.3s ease;
+}
+
+.downloadLink:hover .arrowSvgBackground {
+    fill: var(--yellow, #FFD73B);
+}
+
+.arrowSvgArrow,
+.arrowSvgLine {
+    stroke: var(--white, #F3F3EF);
+    transition: stroke 0.3s ease;
+}
+
+.downloadLink:hover .arrowSvgArrow,
+.downloadLink:hover .arrowSvgLine {
+    stroke: var(--black, #060606);
+}
+
+.endingContentVisual {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.endingBackground {
+    width: 100vh;
+    height: 100vh;
+    min-width: 150%;
+    min-height: 150%;
+    border-radius: 50%;
+    transform: translateY(60%) scale(1.5);
+    background-color: var(--pink, #FF9FC4);
+}
+
+/* Mobile Adjustments */
+@media screen and (max-width: 767px) {
+    .endingLayout {
+        padding: 1em;
+    }
+    .endingLayout h2 {
+        font-size: 1.8em;
+        margin-bottom: 1em;
+    }
+    .downloadPresentation h3 {
+        font-size: 1rem;
+    }
+    .arrowSvg {
+        width: 50px;
+    }
+    .endingBackground {
+        transform: translateY(70%) scale(2);
+    }
+}

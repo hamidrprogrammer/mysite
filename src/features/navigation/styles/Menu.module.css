@@ -1,0 +1,284 @@
+/* Menu Styles using CSS Modules */
+
+.menuDesktop {
+    position: fixed;
+    z-index: 10000;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: .75em;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.menuDesktop.open {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.menuBackdrop {
+    position: fixed;
+    z-index: 9997;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.menuBackdrop.open {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.bgNoise {
+    background: url("/pic/bg-noise.webp") transparent;
+    background-size: 300px 300px;
+    animation: 250ms steps(10, end) 0s infinite alternate-reverse none running noiseAnimation;
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+@keyframes noiseAnimation {
+    0% { background-position: 0% 0%; }
+    10% { background-position: -5% -5%; }
+    20% { background-position: -10% 5%; }
+    30% { background-position: 5% -10%; }
+    40% { background-position: -5% 15%; }
+    50% { background-position: -10% 5%; }
+    60% { background-position: 5% 5%; }
+    70% { background-position: 0% 10%; }
+    80% { background-position: -5% -5%; }
+    90% { background-position: 10% 5%; }
+    100% { background-position: 0% 0%; }
+}
+
+.menuBackground {
+    position: fixed;
+    right: 0;
+    top: 0;
+    border-radius: 0.5rem;
+    background-color: var(--yellow, #FFD73B);
+    z-index: 9998;
+    margin: 1rem;
+    visibility: hidden;
+    opacity: 0;
+    transform-origin: top right;
+}
+
+.menuBackground.open {
+    visibility: visible;
+    opacity: 1;
+}
+
+.menuPopupLayout {
+    position: relative;
+    width: auto;
+    min-width: 260px;
+}
+
+.menuContent {
+    display: flex;
+    gap: 2em;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.8em 2.3em 2.4em 2.3em;
+    position: relative;
+    z-index: 1;
+}
+
+.menuItems {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.1em;
+}
+
+.animatedMenuLink {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--black, #060606);
+}
+
+.animatedMenuLink h2,
+.animatedMenuLink h3 {
+    display: inline-block;
+    position: relative;
+    line-height: 1;
+    letter-spacing: -1px;
+    font-weight: normal;
+    text-transform: none;
+    font-size: 3em;
+    margin: 0;
+}
+
+.menuLinks {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.25em;
+}
+
+.linkItem {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+    font-weight: bold;
+}
+
+.linkItem > a {
+    color: var(--black, #060606);
+    text-decoration: none;
+}
+
+.arrowSvgIcon {
+    transform: rotate(0deg);
+    transition: transform 0.3s ease-in-out;
+    fill: currentColor;
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+}
+
+.menuAnimLink:hover .arrowSvgIcon {
+    transform: rotate(45deg);
+}
+
+.menuDivider {
+    height: 1px;
+    background-color: #E5C135;
+    width: 100%;
+}
+
+/* Menu Styles - Mobile */
+.menuMobile {
+    position: fixed;
+    z-index: 10000;
+    width: 100vw;
+    height: 100dvh;
+    background-color: transparent;
+    display: none;
+    top: 0;
+    left: 0;
+    transform: translateX(100%);
+    visibility: hidden;
+}
+
+.menuMobile.open {
+    display: block;
+    transform: translateX(0%);
+    visibility: visible;
+}
+
+.mobileMenuLayout {
+    display: flex;
+    width: calc(100% - 0.7rem);
+    height: calc(100% - 0.7rem);
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    margin: .35rem;
+    padding: 1.25rem;
+    border-radius: .75rem;
+    background-color: var(--yellow, #FFD73B);
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.topSpacer {
+    width: 100%;
+    height: 1px;
+    flex-shrink: 0;
+}
+
+.menuMobile .menuItems {
+    gap: 1.5em;
+    margin-top: 2em;
+    margin-bottom: auto;
+}
+
+.menuMobile .animatedMenuLink h3 {
+    font-size: 2.5rem;
+    font-weight: 400;
+}
+
+.menuLinkButtons {
+    width: 100%;
+    display: grid;
+    gap: .5rem;
+    grid-template-columns: 1fr 1fr;
+    justify-items: stretch;
+    color: var(--white, #F3F3EF);
+    margin-top: 2em;
+    flex-shrink: 0;
+}
+
+.menuButtonLink {
+    width: 100%;
+    min-height: 3.625rem;
+    display: flex;
+    gap: .5rem;
+    color: var(--white, #F3F3EF);
+    background-color: #151515;
+    border-radius: .75rem;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 1rem;
+    text-transform: uppercase;
+    padding: 0.5em 1em;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.menuButtonLink .textBlock {
+    /* No specific styles needed if text-align center on parent */
+}
+
+.menuButtonLink svg {
+    fill: currentColor;
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+}
+
+.blueAccent {
+    background-color: #0038ff !important;
+    grid-column: 1 / 3;
+}
+
+.pinkAccent {
+    background-color: #FF72B7 !important;
+    color: var(--black, #060606) !important;
+    font-weight: 600;
+}
+
+.wide {
+    grid-column: 1 / 3;
+}
+
+/* Responsive: Show/Hide logic handled by JS */
+@media screen and (max-width: 767px) {
+    .menuDesktop {
+        display: none !important;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .menuMobile {
+        display: none !important;
+    }
+}

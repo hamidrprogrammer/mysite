@@ -1,0 +1,215 @@
+/* Footer.module.css */
+
+.footer {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
+    background-color: var(--black, #060606);
+    color: var(--footer-gray, #B3B3B5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.footerLayout {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+    padding: 1.5rem;
+    z-index: 1;
+    box-sizing: border-box;
+}
+
+.emailContainer {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 1.5rem;
+    box-sizing: border-box;
+}
+
+.footerHeading {
+    font-size: clamp(3em, 10vw, 8em);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0;
+    color: var(--footer-gray, #B3B3B5);
+    word-break: break-word;
+}
+
+.footerEmailLink {
+    text-decoration: none;
+    color: inherit;
+}
+
+.footerEmailLink:hover .footerHeading {
+    color: var(--white, #F3F3EF);
+}
+
+.long { 
+    display: block; 
+}
+
+.short { 
+    display: none; 
+}
+
+.footerTapHalo {
+    font-size: 0.75rem;
+    margin-top: 1rem;
+}
+
+.footerSocialLinks {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: clamp(0.9rem, 1.2vw, 1rem);
+    width: 100%;
+}
+
+.footerSocialSecondContainer {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.animatedLink {
+    text-decoration: none;
+    color: var(--footer-gray, #B3B3B5);
+    position: relative;
+    font-weight: 500;
+}
+
+.animatedLink span {
+    display: inline-block;
+    position: relative;
+    line-height: 1;
+}
+
+.animatedLink:hover {
+    color: var(--white, #F3F3EF);
+}
+
+/* Mobile specific link buttons */
+.menuLinkButtonsMobile {
+    width: 100%;
+    gap: .5rem;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: 1fr 1fr;
+    display: none;
+    color: var(--white, #F3F3EF);
+    margin-top: 2rem;
+}
+
+.menuButtonLink {
+    width: 100%;
+    min-height: 3.625rem;
+    display: flex;
+    gap: .5rem;
+    color: var(--white, #F3F3EF);
+    background-color: #151515;
+    border-radius: .75rem;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 1rem;
+    text-transform: uppercase;
+    padding: 0.5em 1em;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.menuButtonLink svg {
+    fill: currentColor;
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+}
+
+.pinkAccent {
+    background-color: var(--pink, #FF9FC4) !important;
+    color: var(--black, #060606) !important;
+    font-weight: 600;
+}
+
+.wide {
+    grid-column: 1 / 3;
+}
+
+/* OGL Godrays Canvas Styles */
+.canvasEmbed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.canvasWrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+/* Responsive styles for footer */
+@media screen and (max-width: 767px) {
+    .footer {
+        height: auto;
+        min-height: 100svh;
+    }
+
+    .footerLayout {
+        padding: .75rem;
+        justify-content: space-between;
+    }
+
+    .emailContainer {
+        position: relative;
+        order: 1;
+        height: auto;
+        padding: 3em 0.75rem;
+        z-index: 1;
+    }
+
+    .footerHeading.long {
+        display: none;
+    }
+
+    .footerHeading.short {
+        display: block;
+        font-size: clamp(2.5em, 10vw, 4em);
+    }
+
+    .footerTapHalo {
+        display: block;
+        padding-top: 1rem;
+    }
+
+    .footerSocialLinks {
+        display: none;
+    }
+
+    .menuLinkButtonsMobile {
+        display: grid;
+        order: 2;
+    }
+}

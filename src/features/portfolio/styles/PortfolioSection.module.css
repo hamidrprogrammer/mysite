@@ -1,0 +1,28 @@
+/* PortfolioSection.module.css */
+
+.portfolioSection {
+    min-height: 100vh;
+    max-height: 100vh;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--white, #F3F3EF);
+    color: var(--black, #060606);
+}
+
+.portfolioSliderLayout {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Mobile Adjustments */
+@media screen and (max-width: 767px) {
+    .portfolioSection {
+        height: 100svh;
+    }
+}

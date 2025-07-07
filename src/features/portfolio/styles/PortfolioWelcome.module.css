@@ -1,0 +1,64 @@
+/* PortfolioWelcome.module.css */
+
+.portfolioWelcome {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    background-color: var(--white, #F3F3EF);
+}
+
+.portfolioWelcomeContent {
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    color: var(--black, #060606);
+}
+
+.headingLabel {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    text-transform: uppercase;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 0.5em;
+    opacity: 0;
+    transform: translateY(100%);
+}
+
+.portfolioWelcomeContent h1 {
+    font-size: clamp(6em, 12vw, 12em);
+    font-weight: 800;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    margin: 0;
+    opacity: 0;
+    transform: translateY(100%);
+}
+
+.welcomeWall {
+    background-color: var(--white, #F3F3EF);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    transform-origin: bottom;
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 767px) {
+    .portfolioWelcomeContent h1 {
+        font-size: clamp(4em, 15vw, 8em);
+    }
+    .headingLabel {
+        font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+}
