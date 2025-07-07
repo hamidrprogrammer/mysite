@@ -1,0 +1,95 @@
+/* PresentationSection.module.css */
+
+.presentationSection {
+    /* This corresponds to the .pin-spacer or the main pinned section */
+    /* min-height: 100vh; /* Height will be controlled by pinning and wrapper height */
+    /* max-height: 100vh; */
+    width: 100%;
+    position: relative; /* Important for pinning context */
+    overflow: hidden; /* To contain elements during scroll animations */
+    /* background-color: var(--black, #060606); /* Default background for the section */
+}
+
+.presentationWrapper {
+    position: relative;
+    width: 100%;
+    /* Height will be set by JS/GSAP for scroll pinning, e.g., 500vh */
+    /* For dev, set a large height to see all slides if not animated yet */
+    /* height: 500vh;  */
+    overflow: hidden; /* Should not be hidden if it's the scrollable part */
+    background-color: var(--black, #060606); /* Matches original */
+}
+
+.slidesLayout {
+    /* This container helps center/stack slides initially if ScrollTrigger isn't active yet */
+    /* Or it's the direct parent ScrollTrigger manipulates */
+    position: sticky; /* Key for ScrollTrigger pinning of slides within the wrapper */
+    top: 0;
+    display: grid; /* Can be flex or grid depending on how slides are managed by GSAP */
+    /* grid-template-columns: 1fr; */
+    /* grid-template-rows: 1fr; */
+    align-items: center; /* Vertically center slides in viewport */
+    justify-items: center; /* Horizontally center slides */
+    height: 100vh; /* Each "view" of a slide takes up viewport height */
+    width: 100%;
+    overflow: hidden; /* Clip slides that are outside the viewport during transition */
+}
+
+/* Individual slide common styling - more specific styles in their own modules */
+.slide {
+    /* grid-area: 1 / 1 / 2 / 2; /* If using grid to stack them */
+    position: absolute; /* If GSAP is handling all positioning */
+    top:0; /* Ensure they stack at the same top position */
+    left:0;
+    width: 89.79%; /* Original width */
+    height: 100%; /* Take full height of .slidesLayout (which is 100vh) */
+    display: flex; /* Default, can be overridden by specific slide styles */
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.5rem; /* Common border radius for slides */
+    overflow: hidden; /* Prevent content spill from individual slides */
+    /* transform-style: preserve-3d; /* For 3D animations */
+    /* backface-visibility: hidden; /* For smoother 3D animations */
+
+    /* Initial state for GSAP animations (e.g., hidden, off-screen) */
+    /* opacity: 0; */
+    /* visibility: hidden; */
+    /* transform: perspective(800px) translate(0px, 730px) rotateX(40deg) scale(1.1, 1.1); /* Example from original */
+}
+
+.slide.firstSlide { /* Specific for the first slide if it has a different initial state or background */
+    background-color: transparent; /* As per original */
+    color: var(--white, #F3F3EF);
+    /* z-index will be managed by GSAP or animation order */
+}
+
+.slide.middleSlide { /* Common for slides with white background in original */
+    background-color: var(--white, #F3F3EF);
+    color: var(--black, #060606);
+}
+
+/* Specific overrides for slides that have black background but are 'middle' type */
+.slide.aboutSlide,
+.slide.physicsSlide, /* If physics slide also has black bg */
+.slide.estimatesSlide { /* If estimates slide also has black bg */
+    background-color: var(--black, #060606);
+    color: var(--white, #F3F3EF);
+}
+
+
+/* Responsive adjustments */
+@media screen and (max-width: 767px) {
+    .slide {
+        width: calc(100% - 1.5rem); /* Adjust width for mobile, considering padding */
+        /* height: 60vh; /* Original mobile slide height */
+        /* margin: 0 0.75rem; /* Center with padding */
+    }
+     .presentationWrapper {
+        /* padding-top: 1em; /* Original had padding-top: 2em on .slides-layout */
+        /* padding-bottom: 1em; */
+    }
+    .slidesLayout {
+        padding-top: 1em;
+        padding-bottom: 1em;
+    }
+}

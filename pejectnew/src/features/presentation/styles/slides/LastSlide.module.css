@@ -1,0 +1,128 @@
+/* LastSlide.module.css */
+
+.slide {
+    composes: slide from "../PresentationSection.module.css";;
+    composes: middleSlide from "../PresentationSection.module.css";; /* Default white background */
+    /* No specific background override unless needed */
+    position: relative; /* For absolute positioning of children */
+    overflow: hidden; /* Contain the .endingBackground */
+}
+
+.lastSlideContent {
+    /* This class can be used if specific layout overrides are needed for the last slide
+       that differ from a standard .middleSlide.
+       For now, extending .middleSlide should cover background and text color.
+    */
+}
+
+.endingLayout {
+    position: relative; /* To be above .endingContentVisual */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 2; /* Above the visual background */
+    padding: 2em; /* Add some padding */
+    box-sizing: border-box;
+    color: var(--black, #060606); /* Text color on white background */
+}
+
+.endingLayout h2 {
+    font-size: clamp(2em, 4vw, 3em); /* Responsive heading */
+    text-transform: uppercase;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -1px;
+    margin: 0 0 1.5em 0; /* Space below heading */
+}
+
+.downloadPresentation {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+}
+
+.downloadPresentation h3 {
+    font-size: clamp(1.2em, 2vw, 1.5em); /* Responsive */
+    font-weight: 500; /* Make it less prominent than main heading */
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.downloadLink { /* Styling for the <a> tag */
+    display: inline-block; /* To correctly size around SVG */
+    line-height: 0; /* Remove extra space if SVG is display:block */
+}
+
+.arrowSvg { /* Styles for the SVG component itself */
+    width: clamp(50px, 8vw, 64px); /* Responsive size */
+    height: auto;
+    display: block;
+}
+
+.arrowSvgBackground {
+    fill: var(--black, #060606); /* Circle background */
+    transition: fill 0.3s ease;
+}
+.downloadLink:hover .arrowSvgBackground {
+    fill: var(--yellow, #FFD73B); /* Change on hover */
+}
+
+.arrowSvgArrow,
+.arrowSvgLine {
+    stroke: var(--white, #F3F3EF); /* Arrow and line color */
+    transition: stroke 0.3s ease;
+}
+.downloadLink:hover .arrowSvgArrow,
+.downloadLink:hover .arrowSvgLine {
+    stroke: var(--black, #060606); /* Change on hover */
+}
+
+
+.endingContentVisual { /* Renamed from .ending-content for clarity */
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex; /* To center the background circle */
+    justify-content: center;
+    align-items: flex-end; /* Align circle to bottom initially */
+    top: 0;
+    left: 0;
+    z-index: 1; /* Behind .endingLayout */
+    pointer-events: none;
+}
+
+.endingBackground {
+    width: 100vh; /* Original was 100vh, might be too large, try vw or % */
+    height: 100vh;
+    min-width: 150%; /* Ensure it covers width even if viewport is very wide */
+    min-height: 150%; /* Ensure it covers height even if viewport is very tall */
+    border-radius: 50%;
+    transform: translateY(60%) scale(1.5); /* Initial position and scale for animation */
+    background-color: var(--pink, #FF9FC4); /* Fallback pink */
+    /* GSAP will animate transform (translateY, scale) */
+}
+
+/* Mobile Adjustments */
+@media screen and (max-width: 767px) {
+    .endingLayout {
+        padding: 1em;
+    }
+    .endingLayout h2 {
+        font-size: 1.8em; /* Adjust for mobile */
+        margin-bottom: 1em;
+    }
+    .downloadPresentation h3 {
+        font-size: 1rem;
+    }
+    .arrowSvg {
+        width: 50px;
+    }
+    .endingBackground {
+        transform: translateY(70%) scale(2); /* Adjust for mobile */
+    }
+}

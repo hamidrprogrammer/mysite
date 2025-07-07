@@ -1,0 +1,209 @@
+/* Footer.module.css */
+
+.footer {
+    position: relative; /* Changed from fixed/absolute for normal flow, can be adjusted if it's a sticky/fixed footer */
+    width: 100%;
+    height: 100vh; /* Full viewport height */
+    min-height: 600px; /* Minimum height */
+    background-color: var(--black, #060606);
+    color: var(--footer-gray, #B3B3B5);
+    display: flex; /* To use footerLayout for padding and content alignment */
+    flex-direction: column; /* Stack layout and canvas if canvas is child */
+    overflow: hidden; /* Prevent canvas or other elements from overflowing */
+}
+
+.footerLayout {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Align content (social links) to the bottom */
+    width: 100%;
+    height: 100%;
+    padding: 1.5rem;
+    z-index: 1; /* Above canvas-embed if it's a sibling */
+    box-sizing: border-box;
+}
+
+.emailContainer {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* z-index: -1; /* Original, but might be problematic if footer bg is transparent and canvas is behind */
+    z-index: 0; /* Ensure it's behind .footerSocialLinks but above .canvasEmbed if canvas is part of this component */
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 1.5rem; /* Padding for text not to touch edges */
+    box-sizing: border-box;
+}
+
+.footerHeading {
+    font-size: clamp(3em, 10vw, 8em); /* Responsive font size */
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1; /* Adjusted for better readability */
+    margin: 0;
+    color: var(--footer-gray, #B3B3B5); /* Ensure heading uses the footer text color */
+    word-break: break-word; /* Prevent overflow for long email */
+}
+
+.footerEmailLink { /* Styling for the <a> tag around the email heading */
+    text-decoration: none;
+    color: inherit; /* Inherit color from .emailContainer */
+}
+.footerEmailLink:hover .footerHeading {
+    color: var(--white, #F3F3EF); /* Example hover effect */
+}
+
+
+.long { display: block; }
+.short { display: none; }
+
+.footerTapHalo {
+    /* Styles for "♪ TAP HALO ♪" text if needed */
+    font-size: 0.75rem;
+    margin-top: 1rem; /* Space from heading */
+}
+
+
+.footerSocialLinks {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: clamp(0.9rem, 1.2vw, 1rem); /* Responsive font size */
+    width: 100%;
+}
+
+.footerSocialSecondContainer {
+    display: flex;
+    gap: 1.5rem; /* Increased gap for better spacing */
+}
+
+.animatedLink { /* For links like Privacy Policy, Behance etc. */
+    text-decoration: none;
+    color: var(--footer-gray, #B3B3B5);
+    position: relative; /* For potential underline animation */
+    font-weight: 500;
+}
+.animatedLink span { /* From original header, can be reused/adapted */
+    display: inline-block;
+    position: relative;
+    line-height: 1;
+    /* text-shadow: 0px 1em; /* For GSAP animations */
+}
+.animatedLink:hover {
+    color: var(--white, #F3F3EF);
+}
+
+
+/* Mobile specific link buttons - class from original template's mobile menu */
+.menuLinkButtonsMobile {
+    width: 100%;
+    gap: .5rem;
+    grid-template-rows: auto auto auto; /* As per original */
+    grid-template-columns: 1fr 1fr; /* As per original */
+    display: none; /* Hidden by default, shown in mobile media query */
+    color: var(--white, #F3F3EF);
+    margin-top: 2rem;
+}
+.menuButtonLink { /* Copied from navigation/styles/Menu.module.css, ensure consistency or share */
+    width: 100%;
+    min-height: 3.625rem;
+    display: flex;
+    gap: .5rem;
+    color: var(--white, #F3F3EF);
+    background-color: #151515;
+    border-radius: .75rem;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 1rem;
+    text-transform: uppercase;
+    padding: 0.5em 1em;
+    box-sizing: border-box;
+    text-align: center;
+}
+.menuButtonLink svg {
+    fill: currentColor;
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+}
+.pinkAccent { /* Copied from navigation/styles/Menu.module.css */
+    background-color: var(--pink, #FF9FC4) !important;
+    color: var(--black, #060606) !important;
+    font-weight: 600;
+}
+.wide { /* Copied from navigation/styles/Menu.module.css */
+    grid-column: 1 / 3;
+}
+
+
+/* OGL Godrays Canvas Styles */
+.canvasEmbed { /* Was .canvas-embed.ogl-godrays */
+    position: absolute; /* Changed from fixed to be contained within footer */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0; /* Behind .footerLayout */
+}
+
+.canvasWrapper {
+    position: absolute;
+    /* top: -50%; /* Original style - this might be an intentional effect for godrays source */
+    /* For a centered or full canvas, use: */
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden; /* Should not be needed if canvas fits */
+}
+/* Canvas element itself will be styled by JS/OGL if needed, or width/height 100% */
+
+
+/* Responsive styles for footer */
+@media screen and (max-width: 767px) {
+    .footer {
+        height: auto; /* Allow height to adjust to content on mobile */
+        min-height: 100svh; /* Still try to be full screen */
+    }
+    .footerLayout {
+        padding: .75rem;
+        justify-content: space-between;
+    }
+    .emailContainer {
+        position: relative; /* Take space in flow on mobile */
+        order: 1; /* Email text block first */
+        height: auto;
+        padding: 3em 0.75rem; /* More vertical padding */
+        z-index: 1;
+    }
+    .footerHeading.long {
+        display: none;
+    }
+    .footerHeading.short {
+        display: block;
+        font-size: clamp(2.5em, 10vw, 4em);
+    }
+    .footerTapHalo {
+        display: block;
+        padding-top: 1rem;
+    }
+    .footerSocialLinks {
+        display: none;
+    }
+    .menuLinkButtonsMobile {
+        display: grid;
+        order: 2; /* Social buttons section last */
+    }
+    .canvasEmbed {
+        /* On mobile, maybe godrays are less prominent or different position */
+    }
+}

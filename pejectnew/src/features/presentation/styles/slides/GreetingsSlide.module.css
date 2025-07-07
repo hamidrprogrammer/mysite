@@ -1,0 +1,66 @@
+/* GreetingsSlide.module.css */
+
+.slide { /* Extends .slide from PresentationSection.module.css */
+    composes: slide from "../PresentationSection.module.css";; /* Apply common slide styles */
+    /* Any specific overrides for GreetingsSlide can go here if needed */
+}
+.firstSlide { /* Extends .firstSlide */
+    composes: firstSlide from "../PresentationSection.module.css";;
+}
+
+.teamHeading {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Was align-content: center, which is for multi-line flex items */
+    text-align: center;
+    gap: 1.25rem;
+    position: relative; /* To ensure it's above the background image */
+    z-index: 1;
+}
+
+.teamHeading h2 { /* Targeting h2 directly within this component */
+    font-size: clamp(5em, 10vw, 9em); /* Responsive, original was 9em on mobile, 3em on desktop */
+    text-transform: uppercase;
+    font-weight: 800;
+    line-height: 1.1; /* Adjusted from 1.2 for potentially larger text */
+    letter-spacing: -1.5px; /* More negative spacing for large text */
+    margin: 0;
+    padding: 0;
+    color: var(--white, #F3F3EF); /* Ensure text color is white as it's on a dark/image bg */
+}
+
+.headingLabel {
+    font-size: clamp(0.8rem, 1.5vw, 1rem); /* Responsive */
+    text-transform: uppercase;
+    font-weight: 500; /* Give it some weight */
+    color: var(--white, #F3F3EF);
+}
+
+.teamBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--blue, #0D99FE); /* Fallback blue */
+    z-index: 0; /* Behind .teamHeading */
+    border-radius: inherit; /* Inherit from parent .slide */
+    overflow: hidden;
+}
+
+.image { /* Was .team-background img */
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure image covers the area */
+    opacity: 0.7; /* Example: Slight fade to make text more readable, adjust as needed */
+}
+
+/* Mobile specific adjustments for GreetingsSlide if any beyond global .slide changes */
+@media screen and (max-width: 767px) {
+    .teamHeading h2 {
+        /* font-size: 9em; /* Already handled by clamp or specific mobile styles in global slide */
+    }
+    .teamHeading {
+        gap: 0.75rem; /* Smaller gap on mobile */
+    }
+}

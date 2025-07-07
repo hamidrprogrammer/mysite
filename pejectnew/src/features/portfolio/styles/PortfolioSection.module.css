@@ -1,0 +1,38 @@
+/* PortfolioSection.module.css */
+
+.portfolioSection {
+    /* This corresponds to the .portfolio-section which was inside a .pin-spacer */
+    /* min-height: 100vh; /* Height will be controlled by pinning logic if section itself is pinned */
+    /* max-height: 100vh; */
+    width: 100%;
+    height: 100vh; /* Assuming it's a full viewport section */
+    position: relative; /* For positioning of children like Welcome overlay and Slider */
+    overflow: hidden; /* Prevent content spill during animations */
+    background-color: var(--white, #F3F3EF); /* Default background for this section */
+    color: var(--black, #060606); /* Default text color */
+}
+
+.portfolioSliderLayout {
+    /* This was the direct child of .portfolio-section in the original HTML for the main content */
+    /* In React, PortfolioSlider.tsx component will embody this layout */
+    /* If PortfolioSection itself is pinned, this might not need special positioning */
+    /* If PortfolioSlider part is pinned within PortfolioSection, then this needs to be set up for that */
+    position: relative; /* Or absolute if .portfolioWelcome is an overlay */
+    width: 100%;
+    height: 100%;
+    display: flex; /* To ensure PortfolioSlider takes up space if PortfolioWelcome is absolute */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Styles for the original .portfolio-viewer and .pin-spacer would be handled by the scroll animation hook
+   if this section is pinned and its content scrolls/transforms.
+   For now, .portfolioSection acts as the main container.
+*/
+
+/* Mobile Adjustments */
+@media screen and (max-width: 767px) {
+    .portfolioSection {
+        height: 100svh; /* Use svh for mobile to account for browser UI */
+    }
+}

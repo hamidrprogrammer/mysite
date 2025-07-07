@@ -1,0 +1,163 @@
+/* PortfolioSlider.module.css */
+
+.portfolioSliderContainer {
+    /* This was .portfolio-slider-layout in the original HTML */
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; /* Left text, Center cards, Right text */
+    /* grid-template-rows: 1fr auto; /* Main content, Counter at bottom */
+    width: 100%;
+    height: 100%;
+    align-items: center; /* Vertically center content within rows */
+    padding: 1.5rem; /* Consistent padding */
+    box-sizing: border-box;
+    position: relative; /* For positioning counter and cursor */
+}
+
+.portfolioWorkTag,
+.portfolioProjectName {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically center the text blocks */
+    height: 100%; /* Take full height to allow vertical centering */
+    position: relative; /* For z-index if needed over cards */
+    z-index: 2; /* Ensure text is above cards if they overlap */
+}
+
+.portfolioWorkTag {
+    align-items: flex-end; /* Text aligns to the right */
+    padding-right: 2em; /* Space from the card stack */
+}
+
+.portfolioProjectName {
+    align-items: flex-start; /* Text aligns to the left */
+    padding-left: 2em; /* Space from the card stack */
+}
+
+.projectTagHeading,
+.projectNameHeading {
+    position: relative;
+    overflow: hidden; /* For text reveal animations */
+    clip-path: inset(0 0 0 0);
+    margin: 0.2em 0; /* Small vertical gap between heading lines */
+}
+
+.projectTagHeading h1,
+.projectNameHeading h1 {
+    font-size: clamp(3em, 6vw, 5em); /* Large, responsive text */
+    font-weight: 800;
+    line-height: 1.1;
+    text-transform: uppercase;
+    letter-spacing: -0.025em;
+    margin: 0;
+    /* GSAP will animate text content changes and reveals */
+    opacity: 1; /* Start visible, GSAP handles transitions */
+    transform: translateY(0%); /* Start in place */
+}
+.projectTagA {}
+.projectTagB {}
+.projectNameA {}
+.projectNameB {}
+
+
+.projectYear {
+    font-size: clamp(1rem, 1.5vw, 1.25rem); /* Responsive */
+    font-weight: bold;
+    /* padding-top: 0.75rem; /* Original, adjust as needed with flex alignment */
+    display: block; /* Ensure it's on its own line or aligns correctly */
+    margin-top: 0.5em;
+    opacity: 1;
+    transform: translateY(0%);
+}
+
+.portfolioSliderCenter {
+    grid-column: 2 / 3; /* Center column for the cards */
+    width: 100%;
+    height: 100%; /* Takes full height of the row it's in */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; /* For absolute positioning of cards */
+    perspective: 1500px; /* For 3D tilt effect on cards */
+    z-index: 1;
+}
+
+.portfolioCounter {
+    position: absolute;
+    bottom: 1.5rem; /* Align with padding */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: clamp(0.9rem, 1.2vw, 1rem);
+    font-weight: bold;
+    z-index: 3; /* Above cards and text sidebars */
+    color: var(--black, #060606);
+}
+
+.portfolioCursor {
+    position: absolute;
+    font-size: clamp(0.9rem, 1.2vw, 1rem);
+    color: var(--white, #F3F3EF);
+    background-color: var(--black, #060606);
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    transform: translate(-50%, -50%); /* Centering based on top/left from JS */
+    pointer-events: none;
+    z-index: 100; /* Ensure cursor is on top */
+    opacity: 0; /* Hidden initially, shown by JS/GSAP */
+    white-space: nowrap; /* Prevent "SHOW" from wrapping */
+}
+
+/* Dev navigation buttons - can be removed later */
+.devNav {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    display: flex;
+    gap: 1rem;
+}
+.devNav button {
+    padding: 0.5em 1em;
+}
+
+
+/* Mobile Adjustments */
+@media screen and (max-width: 767px) {
+    .portfolioSliderContainer {
+        grid-template-columns: 1fr; /* Stack elements vertically */
+        grid-template-rows: auto auto auto; /* Tag, Cards, Name */
+        align-content: center; /* Center the whole block if it's shorter than viewport */
+        padding: 1rem;
+        height: auto; /* Allow height to be determined by content on mobile */
+        min-height: 100svh; /* Ensure it takes at least full screen */
+    }
+
+    .portfolioWorkTag,
+    .portfolioProjectName {
+        padding: 1em 0; /* Adjust padding */
+        align-items: center; /* Center text on mobile */
+        text-align: center;
+        height: auto; /* Fit content */
+    }
+    .portfolioWorkTag { grid-row: 1; }
+    .portfolioSliderCenter { grid-row: 2; min-height: 50vh; /* Ensure cards have space */ }
+    .portfolioProjectName { grid-row: 3; }
+
+
+    .projectTagHeading h1,
+    .projectNameHeading h1 {
+        font-size: clamp(2.5em, 8vw, 4em); /* Adjust font size for mobile */
+    }
+
+    .projectYear {
+        font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    }
+    .projectNameHeading {
+        flex-direction: column; /* Stack title and year on mobile */
+        align-items: center;
+    }
+
+    .portfolioCounter {
+        bottom: 1rem; /* Adjust position */
+    }
+}

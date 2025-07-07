@@ -1,0 +1,91 @@
+/* TiltCard.module.css */
+
+.tiltCardContainer {
+    position: absolute; /* Will be positioned by GSAP in the slider */
+    width: 24em;  /* Original fixed width */
+    height: 29em; /* Original fixed height */
+    max-width: 90vw; /* Prevent overflow on small screens */
+    max-height: 70vh; /* Prevent overflow on small screens */
+    cursor: pointer;
+    border-radius: 1rem; /* Original */
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px; /* Original */
+    transform-style: preserve-3d; /* For tilt effect */
+    /* GSAP will control transform (translate, scale, rotate) and opacity */
+    opacity: 1; /* Default, GSAP might change this for entry/exit */
+    visibility: visible; /* Default */
+}
+
+.tiltCard {
+    position: relative; /* Changed from absolute to relative as it's the direct child */
+    width: 100%;
+    height: 100%;
+    background-color: var(--white, #F3F3EF); /* Fallback background */
+    clip-path: inset(0 0 0 0 round 1rem); /* Original */
+    overflow: hidden; /* Ensure content like image doesn't spill */
+    background-size: cover; /* For the background image */
+    background-position: center;
+    transform-style: preserve-3d; /* For tilt effect */
+}
+
+.cardLink {
+    position: absolute; /* Take up full space of parent for clickability */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex; /* For potential content inside */
+    align-items: center;
+    justify-content: center;
+    z-index: 1; /* Ensure link is clickable */
+    /* text-decoration: none; */ /* Handled globally or by reset */
+    /* color: inherit; */ /* Handled globally or by reset */
+}
+
+/* If you had images as <img> tags inside .tilt-card (original had this):
+.tiltCard img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    opacity: 0; // GSAP would control this for transitions
+}
+.tiltCard img.active { // Example class for active image
+    opacity: 1;
+}
+*/
+
+/* Card Content (Optional, if text/info is displayed on the card) */
+.cardContent {
+    position: relative; /* Or absolute if positioned within the card */
+    z-index: 2; /* Above background image */
+    color: var(--white, #F3F3EF); /* Example text color if on dark image */
+    text-align: center;
+    padding: 1em;
+    /* background-color: rgba(0,0,0,0.3); /* Slight overlay for readability */
+}
+
+.cardContent h3 {
+    margin: 0 0 0.5em 0;
+    font-size: 1.5em;
+}
+
+.cardContent p {
+    margin: 0;
+    font-size: 1em;
+}
+
+
+/* Mobile Adjustments */
+@media screen and (max-width: 767px) {
+    .tiltCardContainer {
+        width: 60em; /* Original mobile was very large, likely a typo or specific scaling context */
+        height: 80em; /* Let's use responsive units instead */
+        width: 80vw;
+        height: auto; /* Maintain aspect ratio, or set specific aspect-ratio */
+        aspect-ratio: 24 / 29; /* Based on original desktop dimensions */
+        max-width: 80vw;
+        max-height: 60vh;
+    }
+}

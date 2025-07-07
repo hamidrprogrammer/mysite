@@ -1,0 +1,92 @@
+/* Styles for Header.tsx */
+
+.appHeader {
+    width: 100%;
+    padding: 1.5rem;
+    position: fixed;
+    z-index: 9999; /* Ensure header is above most content, but below menu if menu is full screen */
+    top: 0;
+    left: 0;
+    mix-blend-mode: difference;
+    color: var(--white, #F3F3EF); /* Fallback color */
+    pointer-events: none; /* Container doesn't block clicks, only its children do */
+}
+
+.appHeader a,
+.appHeader button { /* Ensure buttons also inherit color if needed */
+    color: var(--white, #F3F3EF);
+    pointer-events: all; /* Make links and buttons clickable */
+}
+
+.appNav {
+    width: 100%;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr auto 1fr; /* Adjusted for typical layout: left, (center), right */
+    font-size: 1.25rem; /* Base font size for nav items */
+}
+
+.briefLinkContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    grid-column: 1 / 2; /* Place in the first column */
+    justify-self: start;
+}
+
+.navEnd {
+    display: flex;
+    gap: 1em;
+    grid-column: 3 / 4; /* Place in the third column */
+    justify-self: end;
+}
+
+/* Animated link styles - can be shared or specific */
+.animatedLink {
+    position: relative;
+    overflow: hidden; /* For text shadow animation if any */
+    clip-path: inset(0 0 0 0); /* For text reveal animations if any */
+    cursor: pointer;
+    text-decoration: none;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+}
+
+.animatedLinkInner span, /* Direct span child for animation target */
+.menuButton span {
+    display: inline-block;
+    position: relative;
+    line-height: 1;
+    font-weight: 500; /* As per original #brief-button span etc. */
+    letter-spacing: normal; /* As per original */
+    /* text-shadow: 0px 1em; */ /* This was likely for GSAP animation, handle with JS */
+}
+
+.menuButton {
+    /* Specific styles for menu button if different from other animated links */
+}
+
+/* Brief Star Icon specific styling if needed */
+.briefLinkContainer svg { /* Targets the BriefStarIcon */
+    transform: rotate(0.1deg) scale(1.01); /* From original #brief-star */
+    /* fill: currentColor; /* Ensure it uses the header's text color */
+}
+
+
+/* Responsive adjustments for header if necessary */
+@media screen and (max-width: 767px) {
+    .appHeader {
+        padding: 0.75rem; /* Smaller padding on mobile */
+    }
+
+    .briefLinkContainer svg { /* Hide star on mobile as per original */
+        display: none;
+    }
+
+    .animatedLinkInner span,
+    .menuButton span {
+        /* font-size: 1rem; /* Adjust font size for mobile if needed */
+    }
+}

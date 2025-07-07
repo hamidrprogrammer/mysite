@@ -1,0 +1,112 @@
+/* AboutSlide.module.css */
+
+.slide {
+    composes: slide from "../PresentationSection.module.css";;
+    composes: middleSlide from "../PresentationSection.module.css";; /* Common style for middle slides */
+    composes: specificAboutSlide from "../PresentationSection.module.css";; /* Specific background/color for about slide */
+    /* background-color: var(--black, #060606); /* Overridden by specificAboutSlide */
+    /* color: var(--white, #F3F3EF); */
+}
+
+.aboutLayout {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 2em 0; /* Vertical padding */
+    box-sizing: border-box;
+}
+
+.infiniteText {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0; /* Prevent shrinking if content is too large */
+}
+
+.infiniteTextWrapper {
+    /* justify-content: start; /* Default for flex */
+    /* align-content: start; /* Default for flex */
+    padding: 1em 0; /* Vertical padding for the text rows */
+    display: flex;
+    width: fit-content; /* Allow the wrapper to be as wide as its content */
+    /* Animation will be handled by GSAP to move this wrapper */
+}
+
+.topInfiniteText .infiniteTextWrapper {
+    border-bottom: 1px solid var(--white, #F3F3EF);
+}
+
+.bottomInfiniteText .infiniteTextWrapper {
+    border-top: 1px solid var(--white, #F3F3EF);
+}
+
+.infiniteTextItem {
+    text-transform: uppercase;
+    font-size: clamp(1rem, 1.5vw, 1.25em); /* Responsive font size */
+    padding-right: 4rem; /* Original was 8rem, might be too large */
+    white-space: nowrap; /* Prevent text from wrapping */
+    flex-shrink: 0; /* Prevent items from shrinking */
+    color: var(--white, #F3F3EF);
+}
+
+.aboutContent {
+    width: 60%;
+    margin: 0 auto; /* Center the content block */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 3em; /* Original was 3.75em */
+    flex-grow: 1; /* Allow this to take up available space */
+    justify-content: center; /* Center content vertically */
+    padding: 1em 0;
+}
+
+.aboutContent h2 { /* Targets #about-header */
+    font-size: clamp(2em, 4vw, 3em); /* Responsive heading */
+    text-transform: uppercase;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -1px;
+    margin: 0;
+    color: var(--white, #F3F3EF);
+}
+
+.partnerBranding {
+    display: flex;
+    flex-wrap: wrap; /* Allow logos to wrap */
+    justify-content: center;
+    align-items: center;
+    gap: 2em 3em; /* Row and column gap, original was 7em col gap */
+    width: 100%; /* Take full width of .about-content */
+}
+
+.partnerBranding img {
+    max-height: 40px; /* Control max height of logos for consistency */
+    width: auto; /* Maintain aspect ratio */
+    /* Original widths were inline, this provides a more uniform approach */
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 767px) {
+    .aboutLayout {
+        padding: 1em 0;
+    }
+    .aboutContent {
+        width: 90%;
+        gap: 2em;
+    }
+    .infiniteTextItem {
+        font-size: 1rem; /* Original mobile size */
+        padding-right: 2rem;
+    }
+    .partnerBranding {
+        display: none; /* Hidden on mobile in original design */
+    }
+    .aboutContent h2 {
+        font-size: 2rem; /* Adjust for mobile */
+    }
+}

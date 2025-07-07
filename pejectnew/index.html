@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Favicon and webclip links will be handled by Vite from the public folder -->
+    <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
+    <link rel="icon" href="/pic/favicon.png" type="image/png"> <!-- Assuming favicon.png will be in public/pic/ -->
+    <link rel="apple-touch-icon" href="/pic/webclip.png"> <!-- Assuming webclip.png will be in public/pic/ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Radiance (React Project)</title>
+
+    <!-- External scripts like analytics will be handled later, possibly via public/index.html or a React specific way -->
+    <!-- Google tag (gtag.js) -->
+    <!-- <script async src="/www.googletagmanager.com/gtag/js"></script> -->
+    <!-- <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-Q95NQS2Q0W'); // Replace with your actual GA ID
+    </script> -->
+
+    <!-- Yandex.Metrika counter -->
+    <!-- <script type="text/javascript" >
+      (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+      m[i].l=1*new Date();
+      for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+      k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+      (window, document, "script", "/mc.yandex.ru/metrika/tag.js", "ym"); // Path assuming tag.js is in public/mc.yandex.ru/
+
+      // ym(98861322, "init", { // Replace with your actual Yandex Metrika ID
+      //      clickmap:true,
+      //      trackLinks:true,
+      //      accurateTrackBounce:true,
+      //      webvisor:true
+      // });
+   </script> -->
+   <!-- <noscript><div><img src="/mc.yandex.ru/watch/YOUR_YANDEX_ID" style="position:absolute; left:-9999px;" alt="" /></div></noscript> -->
+    <!-- /Yandex.Metrika counter -->
+
+    <!-- Netlify RUM (Real User Monitoring) - if used, path needs to be correct for public folder -->
+    <!-- <script async id="netlify-rum-container" src="/.netlify/scripts/rum" data-netlify-rum-site-id="YOUR_NETLIFY_RUM_SITE_ID"></script> -->
+
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+/* PortfolioWelcome.module.css */
+
+.portfolioWelcome {
+    position: absolute; /* Overlay on top of the PortfolioSection */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10; /* Ensure it's above the slider initially */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none; /* Allow interaction with elements behind once animated out */
+    background-color: var(--white, #F3F3EF); /* Same as section background to cover initially */
+}
+
+.portfolioWelcomeContent {
+    text-align: center;
+    overflow: hidden; /* Important for the wall animation */
+    position: relative; /* For positioning the wall */
+    color: var(--black, #060606);
+}
+
+.headingLabel {
+    font-size: clamp(1rem, 1.5vw, 1.25rem); /* Responsive */
+    text-transform: uppercase;
+    font-weight: 500;
+    display: block; /* Ensure it takes its own line if needed */
+    margin-bottom: 0.5em;
+    /* GSAP will animate yPercent and autoAlpha */
+    opacity: 0; /* Start hidden */
+    transform: translateY(100%); /* Start off-screen */
+}
+
+.portfolioWelcomeContent h1 {
+    font-size: clamp(6em, 12vw, 12em); /* Large, responsive text */
+    font-weight: 800;
+    line-height: 1;
+    text-transform: uppercase; /* Assuming "OUR WORKS" is uppercase */
+    letter-spacing: -0.03em; /* Adjust for large text */
+    margin: 0;
+    /* GSAP will animate yPercent and autoAlpha */
+    opacity: 0; /* Start hidden */
+    transform: translateY(100%); /* Start off-screen */
+}
+
+.welcomeWall {
+    background-color: var(--white, #F3F3EF); /* Wall color, same as background */
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1; /* Wall is above text initially */
+    transform-origin: bottom; /* For yPercent animation */
+    /* GSAP will animate yPercent from 0 to -100 */
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 767px) {
+    .portfolioWelcomeContent h1 {
+        font-size: clamp(4em, 15vw, 8em); /* Adjust for mobile */
+    }
+    .headingLabel {
+        font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+}

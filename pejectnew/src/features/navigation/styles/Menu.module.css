@@ -1,0 +1,288 @@
+/* Menu Styles using CSS Modules */
+
+/* :root variables like --white, --yellow, --black, --shadowPreloader should be in a global CSS file (e.g., src/styles/global.css) */
+
+.menuDesktop {
+    position: fixed;
+    z-index: 10000;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex; /* Initially flex to allow GSAP to control visibility/opacity */
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: .75em;
+    visibility: hidden; /* Controlled by GSAP */
+    opacity: 0; /* Controlled by GSAP */
+    pointer-events: none; /* Allow clicks through when hidden */
+}
+.menuDesktop.open {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
+.menuBackdrop {
+    position: fixed;
+    z-index: 9997;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    visibility: hidden; /* Controlled by GSAP */
+    opacity: 0; /* Controlled by GSAP */
+    pointer-events: none;
+}
+.menuBackdrop.open {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto; /* Allow click to close */
+}
+
+.bgNoise {
+    background: url("/pic/bg-noise.webp") transparent;
+    background-size: 300px 300px;
+    animation: 250ms steps(10, end) 0s infinite alternate-reverse none running noiseAnimation; /* Renamed animation */
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+@keyframes noiseAnimation { /* Renamed from noise-animation */
+    0% { background-position: 0% 0%; }
+    10% { background-position: -5% -5%; }
+    20% { background-position: -10% 5%; }
+    30% { background-position: 5% -10%; }
+    40% { background-position: -5% 15%; }
+    50% { background-position: -10% 5%; }
+    60% { background-position: 5% 5%; }
+    70% { background-position: 0% 10%; }
+    80% { background-position: -5% -5%; }
+    90% { background-position: 10% 5%; }
+    100% { background-position: 0% 0%; } /* Ensure smooth loop */
+}
+
+.menuBackground {
+    position: fixed;
+    right: 0;
+    top: 0;
+    border-radius: 0.5rem;
+    background-color: var(--yellow, #FFD73B);
+    z-index: 9998;
+    margin: 1rem;
+    /* GSAP will control height, width, opacity, visibility */
+    visibility: hidden;
+    opacity: 0;
+    transform-origin: top right; /* For scaling animations */
+}
+.menuBackground.open {
+    visibility: visible; /* Or let GSAP handle it */
+    opacity: 1;
+}
+
+
+.menuPopupLayout {
+    position: relative; /* Ensures it's within the .menuDesktop flow */
+    width: auto;
+    min-width: 260px; /* From original inline style for menu-background */
+}
+
+.menuContent {
+    display: flex;
+    gap: 2em;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.8em 2.3em 2.4em 2.3em;
+    position: relative;
+    z-index: 1;
+}
+
+.menuItems {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.1em;
+}
+
+.animatedMenuLink {
+    position: relative;
+    overflow: hidden;
+    /* clip-path: inset(0 0 0 0); /* GSAP might handle this for text animations */
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--black, #060606);
+}
+
+.animatedMenuLink h2,
+.animatedMenuLink h3 {
+    display: inline-block;
+    position: relative;
+    line-height: 1;
+    letter-spacing: -1px;
+    font-weight: normal;
+    text-transform: none;
+    font-size: 3em;
+    /* text-shadow: 0px 1em; /* GSAP will handle this if used for reveal */
+    margin: 0; /* Explicitly remove margin for h2/h3 */
+}
+
+.menuLinks {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.25em;
+}
+
+.linkItem {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+    font-weight: bold;
+}
+
+.linkItem > a { /* Target the actual <a> tag for link styles */
+    color: var(--black, #060606); /* Ensure link color is black */
+    text-decoration: none;
+}
+
+
+.arrowSvgIcon { /* Style for the SVG icon component */
+    transform: rotate(0deg);
+    transition: transform 0.3s ease-in-out;
+    fill: currentColor;
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0; /* Prevent icon from shrinking */
+}
+
+.menuAnimLink:hover .arrowSvgIcon { /* Class from original, apply to linkItem or its anchor */
+    transform: rotate(45deg);
+}
+
+.menuDivider {
+    height: 1px;
+    background-color: #E5C135;
+    width: 100%;
+}
+
+/* Menu Styles - Mobile */
+.menuMobile {
+    position: fixed;
+    z-index: 10000;
+    width: 100vw;
+    height: 100dvh;
+    background-color: transparent;
+    display: none; /* Default hidden, JS toggles this or a class */
+    top: 0;
+    left: 0;
+    transform: translateX(100%); /* Initial off-screen for GSAP slide-in */
+    visibility: hidden; /* Start hidden */
+}
+
+.menuMobile.open {
+    display: block; /* Or flex/grid as needed by layout */
+    transform: translateX(0%);
+    visibility: visible;
+}
+
+.mobileMenuLayout {
+    display: flex;
+    width: calc(100% - 0.7rem);
+    height: calc(100% - 0.7rem);
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    margin: .35rem;
+    padding: 1.25rem;
+    border-radius: .75rem;
+    background-color: var(--yellow, #FFD73B);
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.topSpacer {
+    width: 100%;
+    height: 1px;
+    flex-shrink: 0;
+}
+
+.menuMobile .menuItems {
+    gap: 1.5em;
+    margin-top: 2em; /* Add some space at the top */
+    margin-bottom: auto; /* Push link buttons to bottom */
+}
+.menuMobile .animatedMenuLink h3 {
+    font-size: 2.5rem;
+    font-weight: 400;
+}
+
+.menuLinkButtons {
+    width: 100%;
+    display: grid;
+    gap: .5rem;
+    grid-template-columns: 1fr 1fr;
+    justify-items: stretch;
+    color: var(--white, #F3F3EF);
+    margin-top: 2em; /* Space above buttons */
+    flex-shrink: 0;
+}
+
+.menuButtonLink {
+    width: 100%;
+    min-height: 3.625rem; /* Use min-height for better text wrapping */
+    display: flex;
+    gap: .5rem;
+    color: var(--white, #F3F3EF);
+    background-color: #151515;
+    border-radius: .75rem;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 1rem;
+    text-transform: uppercase;
+    padding: 0.5em 1em; /* Add some padding */
+    box-sizing: border-box;
+    text-align: center; /* Center text */
+}
+.menuButtonLink .textBlock { /* No specific styles needed if text-align center on parent */
+    /* flex-grow: 1; */ /* Can cause issues if icon is meant to be separate */
+}
+.menuButtonLink svg {
+    fill: currentColor;
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+}
+
+.menuButtonLink.blueAccent {
+    background-color: #0038ff;
+    grid-column: 1 / 3;
+}
+
+.menuButtonLink.pinkAccent {
+    background-color: #FF72B7;
+    color: var(--black, #060606) !important;
+    font-weight: 600;
+}
+
+.menuButtonLink.wide {
+    grid-column: 1 / 3;
+}
+
+
+/* Responsive: Show/Hide logic will be primarily handled by JS toggling an 'open' class on .menuDesktop and .menuMobile,
+   and media queries can fine-tune layout differences if a single Menu component is used.
+   If separate DesktopMenu and MobileMenu components are used, App.tsx can switch between them.
+*/
+
+/* Example: If using a single Menu component and CSS to switch visibility (less ideal with GSAP) */
+@media screen and (max-width: 767px) {
+    /* .menuDesktop { display: none !important; } */ /* GSAP will handle actual display none/flex */
+}
+
+@media screen and (min-width: 768px) {
+    /* .menuMobile { display: none !important; } */ /* GSAP will handle actual display none/block */
+}

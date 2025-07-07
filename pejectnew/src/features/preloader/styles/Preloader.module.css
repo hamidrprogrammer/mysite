@@ -1,0 +1,88 @@
+/* Preloader Styles using CSS Modules */
+
+/* Define CSS variables locally if not globally available, or ensure they are in :root in global.css */
+/* For example:
+:root {
+    --white: #F3F3EF;
+    --yellow: #FFD73B;
+    --shadowPreloader: 0.2em;
+}
+*/
+
+.preloaderWrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 99999;
+    padding: 1.5rem;
+    overflow: hidden;
+    background-color: var(--white, #F3F3EF); /* Fallback color */
+    display: grid;
+    justify-items: start;
+    align-items: end;
+    visibility: visible; /* Ensure it's visible initially */
+    opacity: 1; /* Ensure it's visible initially */
+}
+
+.preloaderCounter {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.25em;
+    height: 142px; /* Consider making this dynamic if image heights vary or based on vw/vh */
+    overflow: hidden;
+    z-index: 1;
+    justify-items: start;
+    align-items: start;
+}
+
+.counterDigitContainer { /* Added a wrapper for each digit for better control if needed */
+    overflow: hidden; /* To contain the translateY animation of images */
+    height: 100%; /* Match parent height */
+    display: flex;
+    align-items: flex-start; /* Align images to the top of this container */
+}
+
+.counterPic {
+    width: 120px; /* This could be a variable or % based for responsiveness */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove extra space below image */
+}
+
+.preloaderBackground {
+    background-color: var(--yellow, #FFD73B); /* Fallback color */
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 0; /* Ensure it's behind the counter */
+}
+
+.preloaderHaloMobile {
+    display: none; /* Default: hidden for desktop */
+    /* Mobile specific styles will be handled by media queries or inline by JS if complex */
+    z-index: 1; /* Ensure it's above background if/when shown */
+}
+
+
+/* Media Query for Mobile specific preloader styles */
+/* These styles will apply when screen width is 767px or less */
+@media screen and (max-width: 767px) {
+    .preloaderWrapper {
+        justify-items: center; /* Center items on mobile */
+        align-items: center;   /* Center items on mobile */
+    }
+
+    .preloaderHaloMobile {
+        display: flex; /* Show on mobile */
+        width: 89px; /* Specific width for mobile */
+        /* filter: drop-shadow(0 0 var(--shadowPreloader, 0.2em) white); */ /* GSAP will handle animation */
+        /* GSAP will animate --shadowPreloader or similar property */
+    }
+
+    .preloaderCounter {
+        display: none; /* Hidden on mobile as per original CSS */
+    }
+}

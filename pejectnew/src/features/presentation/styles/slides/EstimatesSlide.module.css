@@ -1,0 +1,111 @@
+/* EstimatesSlide.module.css */
+
+.slide {
+    composes: slide from "../PresentationSection.module.css";;
+    composes: middleSlide from "../PresentationSection.module.css";;
+    composes: specificEstimatesSlide from "../PresentationSection.module.css";; /* If it needs specific background/color */
+    /* background-color: var(--black, #060606); */ /* Example if it's dark */
+    /* color: var(--white, #F3F3EF); */
+}
+
+.approachLayout {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    gap: 3em; /* Reduced from 5em for better fit */
+    overflow: hidden; /* To contain the card animation */
+    padding: 2em 0; /* Vertical padding */
+    box-sizing: border-box;
+}
+
+.approachContent {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1em;
+    color: var(--white, #F3F3EF); /* Assuming dark background */
+}
+
+.approachContent h2 {
+    font-size: clamp(2em, 4vw, 3em); /* Responsive heading */
+    text-transform: uppercase;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -1px;
+    margin: 0;
+}
+
+.longHeading {
+    display: block;
+}
+
+.shortHeading {
+    display: none;
+}
+
+.estimateCardsHolder {
+    position: relative;
+    display: flex;
+    /* justify-content: flex-start; /* This will be handled by animation */
+    align-items: center;
+    overflow: hidden; /* Crucial for the scrolling effect */
+    width: 100%;
+    height: 40%; /* As per original */
+    /* perspective: 1000px; /* For 3D effects on cards if any */
+}
+
+.estimateCardsWrapper {
+    position: absolute; /* Allows GSAP to animate its position */
+    display: flex; /* Changed from grid for simpler horizontal animation */
+    /* grid-auto-flow: column; */
+    /* grid-template-rows: auto; */
+    /* grid-auto-columns: auto; */
+    gap: 1.5rem; /* Space between cards */
+    /* Animation will be handled by GSAP */
+    /* For development, you can add a large width to see all cards: */
+    /* width: calc( (45em + 1.5rem) * 6 ); */
+}
+
+.estimateCard {
+    width: 40em; /* Slightly reduced from 45em for better fit with gaps */
+    max-width: 90vw; /* Ensure it doesn't overflow too much on smaller viewports before scaling */
+    height: auto; /* Maintain aspect ratio based on SVG content */
+    /* padding-right: 1.5rem; /* This was on card, now gap on wrapper */
+    flex-shrink: 0; /* Prevent cards from shrinking */
+    display: block;
+}
+
+
+/* Mobile adjustments */
+@media screen and (max-width: 767px) {
+    .longHeading {
+        display: none;
+    }
+    .shortHeading {
+        display: block;
+        font-size: 2rem; /* Adjust for mobile */
+    }
+    .approachContent {
+        width: 90%;
+    }
+    .approachLayout {
+        gap: 2em;
+        padding: 1em 0;
+    }
+    .estimateCardsHolder {
+        height: 30%; /* Adjust height for mobile */
+    }
+    .estimateCard {
+        width: 20rem; /* Original mobile size */
+        max-width: 70vw;
+    }
+    .estimateCardsWrapper {
+        gap: 1rem;
+    }
+}
